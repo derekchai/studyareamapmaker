@@ -5,7 +5,8 @@ authors = [
   { name="Derek Chai", email="chderek9@gmail.com" },
 ]
 dependencies = [
-    "geopandas>=1.1.0"
+    "geopandas>=1.1.0",
+    "matplotlib>=3.10.0",
 ]
 description = "A package to create study area maps."
 readme = "README.md"
