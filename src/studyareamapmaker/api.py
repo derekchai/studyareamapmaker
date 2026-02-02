@@ -5,6 +5,7 @@ from fastapi import FastAPI, Response, File, UploadFile
 from io import BytesIO
 from typing import Annotated
 from matplotlib.image import imread
+from PIL import Image
 
 app = FastAPI()
 
@@ -30,10 +31,11 @@ async def get_map(start: float = 0,
           })
 async def get_identity(file: UploadFile):
     file_contents = await file.read()
-    image = imread(BytesIO(file_contents))
+    image = Image.open(BytesIO(file_contents)).convert("RGB")
+    image_array = np.array(image)
 
     plt.figure()
-    plt.imshow(image)
+    plt.imshow(image_array)
 
     buffer = BytesIO()
     plt.savefig(buffer, format="png")
