@@ -3,7 +3,7 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 
-def get_map(shapefile_path: str) -> bytes:
+def generate_study_area_map(shapefile_path: str) -> bytes:
     shape: gpd.GeoDataFrame = gpd.read_file(shapefile_path)
 
     fig, ax = plt.subplots(figsize=(9, 9))

@@ -3,7 +3,7 @@ import shutil
 from fastapi import FastAPI, Response, UploadFile
 from typing import List
 from pathlib import Path
-from .main import get_map as get_changed_map
+from .main import generate_study_area_map as get_changed_map
 
 app = FastAPI()
 
