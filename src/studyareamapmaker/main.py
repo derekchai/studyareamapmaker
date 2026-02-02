@@ -78,3 +78,5 @@ def _plot_inset_map(ax: plt.Axes,
         label.set_horizontalalignment("center")
     
     inset.tick_params(axis="y", pad=7)
+
+    map.get_study_regions_data_frame_wgs84().set_geometry("centroid").plot(ax=inset, color="red")
