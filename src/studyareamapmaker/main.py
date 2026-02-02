@@ -42,7 +42,7 @@ def _plot_inset_map(ax: plt.Axes,
         inset.patch.set_alpha(0)  # set transparent background
 
     shape = shape.to_crs(_WGS84)
-    shape.plot(ax=inset, linewidth=1, edgecolor="k", facecolor="w")
+    shape.plot(ax=inset, linewidth=map.inset_line_width, edgecolor="k", facecolor="w")
 
     inset.xaxis.set_major_formatter(FuncFormatter(_deg_min_formatter))
     inset.yaxis.set_major_formatter(FuncFormatter(_deg_min_formatter))
