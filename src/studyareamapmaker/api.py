@@ -3,7 +3,8 @@ import shutil
 from fastapi import FastAPI, Response, UploadFile
 from typing import List
 from pathlib import Path
-from .main import generate_study_area_map as get_changed_map
+from .main import generate_study_area_map 
+from .study_map import StudyMap
 
 app = FastAPI()
 
@@ -11,7 +12,8 @@ app = FastAPI()
           responses={
               200: { "content": { "image/png": {} } }
           })
-async def get_map(shapefiles: List[UploadFile]):
+async def get_map(shapefiles: List[UploadFile],
+                  study_map: StudyMap):
     with tempfile.TemporaryDirectory() as temp_dir:
         temp_dir_path = Path(temp_dir)
         main_shp_path = None
@@ -24,6 +26,6 @@ async def get_map(shapefiles: List[UploadFile]):
             if destination.suffix.lower() == ".shp":
                 main_shp_path = destination
 
-        image_bytes = get_changed_map(str(main_shp_path))
+        image_bytes = generate_study_area_map(main_shp_path, study_map)
             
     return Response(content=image_bytes, media_type="image/png")

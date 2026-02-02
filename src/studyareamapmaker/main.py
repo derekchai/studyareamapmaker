@@ -4,8 +4,9 @@ from io import BytesIO
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from .study_map import StudyMap
 
-def generate_study_area_map(map: StudyMap) -> bytes:
-    shape: gpd.GeoDataFrame = gpd.read_file(map.shapefile_path)
+def generate_study_area_map(shapefile_path: str,
+                            map: StudyMap) -> bytes:
+    shape: gpd.GeoDataFrame = gpd.read_file(shapefile_path)
 
     fig, ax = plt.subplots(figsize=(9, 9))
 
