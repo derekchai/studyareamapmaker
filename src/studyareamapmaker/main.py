@@ -43,7 +43,14 @@ def _plot_study_regions(ax: plt.Axes,
     )
     data_frame = data_frame.to_crs(base_shape.crs)
 
-    data_frame.plot(ax=ax, linewidth=1, alpha=0.3, column="name", cmap="Paired", legend=True)
+    data_frame.plot(ax=ax, linewidth=1, alpha=0.3, column="name", cmap="Paired", 
+                    legend=True, legend_kwds={ "loc": "lower right" })
+    
+    min_x, min_y, max_x, max_y = data_frame.total_bounds
+    padding = 2000
+
+    ax.set_xlim(min_x - padding, max_x + padding)
+    ax.set_ylim(min_y - padding, max_y + padding)
 
 
 def _plot_inset_map(ax: plt.Axes, 
