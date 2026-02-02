@@ -1,6 +1,10 @@
 import json
+import geopandas as gpd
 from pydantic import BaseModel, Field, model_validator
 from typing import List
+from shapely.geometry import box
+
+_WGS84 = "EPSG:4326"
 
 class StudyMap(BaseModel):
     study_regions: List[StudyMapRegion] = Field(default=[])
@@ -16,6 +20,14 @@ class StudyMap(BaseModel):
         if isinstance(value, str):
             return cls(**json.loads(value))
         return value
+
+    def get_study_regions_data_frame_wgs84(self):
+        return gpd.GeoDataFrame(
+            { "name": [f"Region {i + 1}" for i in range(len(self.study_regions))] },
+            geometry=[box(r.min_lon, r.min_lat, r.max_lon, r.max_lat) 
+                    for r in self.study_regions],
+            crs=_WGS84
+        )
 
 class StudyMapRegion(BaseModel):
     min_lat: float = Field(ge=-90, le=90)

@@ -36,14 +36,7 @@ def _plot_study_regions(ax: plt.Axes,
                         base_shape: gpd.GeoDataFrame):
     base_shape.plot(ax=ax, linewidth=1, edgecolor="k", facecolor="w")
 
-    data_frame = gpd.GeoDataFrame(
-        { "name": [f"Region {i + 1}" for i in range(len(map.study_regions))] },
-        geometry=[box(r.min_lon, r.min_lat, r.max_lon, r.max_lat) 
-                  for r in map.study_regions],
-        crs=_WGS84
-    )
-    data_frame = data_frame.to_crs(base_shape.crs)
-
+    data_frame = map.get_study_regions_data_frame_wgs84().to_crs(base_shape.crs)
     data_frame.plot(ax=ax, linewidth=1, alpha=0.3, column="name", cmap="Paired", 
                     legend=True, legend_kwds={ "loc": "lower right" })
     
