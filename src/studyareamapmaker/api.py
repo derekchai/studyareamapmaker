@@ -1,45 +1,29 @@
-import matplotlib.pyplot as plt
-import numpy as np
-import math
-from fastapi import FastAPI, Response, File, UploadFile
-from io import BytesIO
-from typing import Annotated
-from matplotlib.image import imread
-from PIL import Image
+import tempfile
+import shutil
+from fastapi import FastAPI, Response, UploadFile
+from typing import List
+from pathlib import Path
+from .main import get_map as get_changed_map
 
 app = FastAPI()
 
-@app.get("/map",
-         responses={
-             200: { "content": { "image/png": {} } }
-         })
-async def get_map(start: float = 0,
-                  stop: float = 2 * math.pi):
-    x = np.arange(start, stop, 0.1)
-    y = np.sin(x)
-    plt.plot(x, y)
-    
-    buffer = BytesIO()
-    plt.savefig(buffer, format="png")
-    png = buffer.getvalue()
-    
-    return Response(content=png, media_type="image/png")
-
-@app.post("/identity",
+@app.post("/get_map",
           responses={
               200: { "content": { "image/png": {} } }
           })
-async def get_identity(file: UploadFile):
-    file_contents = await file.read()
-    image = Image.open(BytesIO(file_contents)).convert("RGB")
-    image_array = np.array(image)
+async def get_map(shapefiles: List[UploadFile]):
+    with tempfile.TemporaryDirectory() as temp_dir:
+        temp_dir_path = Path(temp_dir)
+        main_shp_path = None
 
-    plt.figure()
-    plt.imshow(image_array)
+        for file in shapefiles:
+            destination = temp_dir_path / file.filename
+            with open(destination, "wb") as f:
+                shutil.copyfileobj(file.file, f)
 
-    buffer = BytesIO()
-    plt.savefig(buffer, format="png")
+            if destination.suffix.lower() == ".shp":
+                main_shp_path = destination
 
-    plt.close()
-
-    return Response(content=buffer.getvalue(), media_type="image/png")
+        image_bytes = get_changed_map(str(main_shp_path))
+            
+    return Response(content=image_bytes, media_type="image/png")
