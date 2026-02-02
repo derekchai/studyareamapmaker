@@ -7,7 +7,7 @@ def get_map(shapefile_path: str) -> bytes:
 
     fig, ax = plt.subplots(figsize=(9, 9))
 
-    shape.plot(ax=ax, linewidth=1, color="red")
+    shape.plot(ax=ax, linewidth=1, edgecolor="k", facecolor="w")
 
     ax.set_title("Shapefile")
 
