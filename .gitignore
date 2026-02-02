@@ -1,1 +1,13 @@
 .venv
+venv
+out
+img
+yolo
+data
+__pycache__
+.DS_Store
+debug
+temp
+*.png
+*.jpg
+*.jpeg
