@@ -18,6 +18,7 @@ def generate_study_area_map(shapefile_path: str,
     _plot_inset_map(ax, shape, map)
 
     ax.set_title("Shapefile")
+    ax.set_facecolor("lightblue")
 
     buffer = BytesIO()
     plt.savefig(buffer, format="png")
