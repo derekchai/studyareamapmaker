@@ -4,6 +4,7 @@ from io import BytesIO
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from matplotlib.ticker import FuncFormatter, MultipleLocator
 from .study_map import StudyMap
+from shapely.geometry import box
 
 _WGS84 = "EPSG:4326"
 
@@ -13,6 +14,7 @@ def generate_study_area_map(shapefile_path: str,
 
     fig, ax = plt.subplots(figsize=(9, 9))
 
+    _plot_study_regions(ax, map, shape)
     _plot_inset_map(ax, shape, map)
 
     ax.set_title("Shapefile")
@@ -27,6 +29,22 @@ def _deg_min_formatter(x, pos):
     deg = int(x)
     minutes = (x - deg) * 60
     return f"{sign}{deg}°{minutes:.0f}′"
+
+def _plot_study_regions(ax: plt.Axes, 
+                        map: StudyMap, 
+                        base_shape: gpd.GeoDataFrame):
+    base_shape.plot(ax=ax, linewidth=1, edgecolor="k", facecolor="w")
+
+    data_frame = gpd.GeoDataFrame(
+        { "name": [f"Region {i + 1}" for i in range(len(map.study_regions))] },
+        geometry=[box(r.min_lon, r.min_lat, r.max_lon, r.max_lat) 
+                  for r in map.study_regions],
+        crs=_WGS84
+    )
+    data_frame = data_frame.to_crs(base_shape.crs)
+
+    data_frame.plot(ax=ax, linewidth=1, alpha=0.3, column="name", cmap="Paired", legend=True)
+
 
 def _plot_inset_map(ax: plt.Axes, 
                     shape: gpd.GeoDataFrame,
