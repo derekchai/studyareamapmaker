@@ -1,0 +1,19 @@
+[project]
+name = "studyareamapmaker"
+version = "0.0.1"
+authors = [
+  { name="Derek Chai", email="chderek9@gmail.com" },
+]
+description = "A package to create study area maps."
+readme = "README.md"
+requires-python = ">=3.14"
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Operating System :: OS Independent",
+]
+license = "MIT"
+license-files = ["LICEN[CS]E*"]
+
+[project.urls]
+Homepage = "https://github.com/pypa/sampleproject"
+Issues = "https://github.com/pypa/sampleproject/issues"
