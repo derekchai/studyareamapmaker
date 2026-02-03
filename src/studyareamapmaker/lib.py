@@ -35,6 +35,7 @@ def generate_study_area_map(shapefile_path: str,
 
     buffer = BytesIO()
     plt.savefig(buffer, format="png")
+    plt.close()
     return buffer.getvalue()
 
 def _deg_min_formatter(x, pos):
