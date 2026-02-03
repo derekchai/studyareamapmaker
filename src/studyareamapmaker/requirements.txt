@@ -1,7 +1,0 @@
-geopandas
-matplotlib
-fastapi
-matplotlib_map_utils
-uvicorn
-jinja2
-python-multipart
