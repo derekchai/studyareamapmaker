@@ -17,11 +17,11 @@ def study_map_from_form(
     study_regions: List[StudyMapRegion] = Form(default=[]),
     title: str | None = Form(default=None),
 
-    show_north_arrow: bool = Form(default=True),
-    show_scale: bool = Form(default=True),
-    show_axis_ticks: bool = Form(default=True),
+    show_north_arrow: bool = Form(default=False),
+    show_scale: bool = Form(default=False),
+    show_axis_ticks: bool = Form(default=False),
 
-    pad_top_factor: float = Form(default=0.1),
+    pad_top_factor: float = Form(default=0.1, ge=0),
     pad_bottom_factor: float = Form(default=0.1),
     pad_left_factor: float = Form(default=0.1),
     pad_right_factor: float = Form(default=0.1),
