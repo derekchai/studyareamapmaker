@@ -20,7 +20,12 @@
     <br>
 
     <form hx-post="/get_map" hx-target="#map-container" hx-swap="innerHTML" 
-    enctype="multipart/form-data">
+    enctype="multipart/form-data"
+    hx-on:htmx:xhr:progress="
+        let percent = Math.round((event.detail.loaded / event.detail.total) * 100);
+        // document.getElementById('upload-progress').value = percent;
+        document.getElementById('upload-percent').innerText = percent + '%';
+    ">
         <button type="reset">Reset to defaults</button><br><br>
 
         <fieldset>
@@ -30,6 +35,12 @@
                 <label>Shapefiles</label>
                 <input type="file" name="shapefiles" multiple required>
             </p>
+            <p>
+                <label></label>
+                <span id="upload-percent">0%</span>
+            </p>
+
+<!-- <progress id="upload-progress" value="0" max="100" style="width: 300px;"></progress> -->
 
             <p>
                 <label>Title</label>
