@@ -1,16 +1,50 @@
 import tempfile
 import shutil
-from fastapi import FastAPI, Response, UploadFile, Request, Form
+from fastapi import FastAPI, Response, UploadFile, Request, Form, Depends
 from typing import List, Annotated
 from pathlib import Path
 from .main import generate_study_area_map 
-from .study_map import StudyMap
+from .study_map import StudyMap, StudyMapRegion
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import HTMLResponse, JSONResponse
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
 
 templates = Jinja2Templates(directory="templates")
+
+def study_map_from_form(
+    study_regions: List[StudyMapRegion] = Form(default=[]),
+    title: str | None = Form(default=None),
+
+    show_north_arrow: bool = Form(default=True),
+    show_scale: bool = Form(default=True),
+    show_axis_ticks: bool = Form(default=True),
+
+    pad_top_factor: float = Form(default=0.1),
+    pad_bottom_factor: float = Form(default=0.1),
+    pad_left_factor: float = Form(default=0.1),
+    pad_right_factor: float = Form(default=0.1),
+
+    inset_width: float = Form(default=0.3, ge=0, le=1),
+    inset_height: float = Form(default=0.3, ge=0, le=1),
+    inset_show_background: bool = Form(default=False),
+    inset_line_width: float = Form(default=0.7, ge=0),
+) -> StudyMap:
+    return StudyMap(
+        study_regions=study_regions,
+        title=title,
+        show_north_arrow=show_north_arrow,
+        show_scale=show_scale,
+        show_axis_ticks=show_axis_ticks,
+        pad_top_factor=pad_top_factor,
+        pad_bottom_factor=pad_bottom_factor,
+        pad_left_factor=pad_left_factor,
+        pad_right_factor=pad_right_factor,
+        inset_width=inset_width,
+        inset_height=inset_height,
+        inset_show_background=inset_show_background,
+        inset_line_width=inset_line_width
+    )
 
 @app.get("/", response_class=HTMLResponse)
 async def get_index(request: Request):
@@ -21,7 +55,7 @@ async def get_index(request: Request):
               200: { "content": { "image/png": {} } }
           })
 async def get_map(shapefiles: List[UploadFile],
-                  study_map: Annotated[StudyMap, Form()]):
+                  study_map: Annotated[StudyMap, Depends] = Depends(study_map_from_form)):
     with tempfile.TemporaryDirectory() as temp_dir:
         temp_dir_path = Path(temp_dir)
         main_shp_path = None
