@@ -7,7 +7,7 @@ from pathlib import Path
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 from study_map import StudyMapRegion, StudyMap
-from studyareamapmaker.lib import generate_study_area_map
+from lib import generate_study_area_map
 
 app = FastAPI()
 
