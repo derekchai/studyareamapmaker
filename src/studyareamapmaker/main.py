@@ -18,7 +18,7 @@ def generate_study_area_map(shapefile_path: str,
     _plot_study_regions(ax, map, shape)
     _plot_inset_map(ax, shape, map)
 
-    ax.set_title("Shapefile")
+    ax.set_title(map.title)
     ax.set_facecolor("lightblue")
 
     if map.show_north_arrow:
