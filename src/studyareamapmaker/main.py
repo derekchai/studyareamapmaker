@@ -56,10 +56,12 @@ def _plot_study_regions(ax: plt.Axes,
     min_x, min_y, max_x, max_y = data_frame.total_bounds
     height = max_y - min_y
     width = max_x - min_x
-    pad_factor = 0.1
 
-    ax.set_xlim(min_x - pad_factor * width, max_x + pad_factor * width)
-    ax.set_ylim(min_y - pad_factor * height, max_y + pad_factor * height)
+    t, b = map.pad_top_factor, map.pad_bottom_factor, 
+    l, r = map.pad_left_factor, map.pad_right_factor
+
+    ax.set_xlim(min_x - l * width, max_x + r * width)
+    ax.set_ylim(min_y - b * height, max_y + t * height)
 
 
 def _plot_inset_map(ax: plt.Axes, 

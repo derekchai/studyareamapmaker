@@ -15,6 +15,11 @@ class StudyMap(BaseModel):
     show_scale: bool = Field(default=True)
     show_axis_ticks: bool = Field(default=True)
 
+    pad_top_factor: float = Field(default=0.1)
+    pad_bottom_factor: float = Field(default=0.1)
+    pad_left_factor: float = Field(default=0.1)
+    pad_right_factor: float = Field(default=0.1)
+
     inset_width: float = Field(default=0.3, ge=0, le=1)
     inset_height: float = Field(default=0.3, ge=0, le=1)
     inset_show_background: bool = Field(default=False)
