@@ -21,6 +21,8 @@
 
     <form hx-post="/get_map" hx-target="#map-container" hx-swap="innerHTML" 
     enctype="multipart/form-data">
+        <button type="reset">Reset to defaults</button><br><br>
+
         <fieldset>
             <legend>General</legend>
 
@@ -97,7 +99,7 @@
         </fieldset>
         <br>
 
-        <button type="submit">Generate</button>
+        <button type="submit">Generate</button><br>
     </form>
 
     <div id="map-container"></div>
