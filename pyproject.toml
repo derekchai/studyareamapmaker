@@ -8,6 +8,7 @@ dependencies = [
     "geopandas>=1.1.0",
     "matplotlib>=3.10.0",
     "fastapi>=0.128.0",
+    "matplotlib_map_utils>=3.1.0",
 ]
 description = "A package to create study area maps."
 readme = "README.md"
