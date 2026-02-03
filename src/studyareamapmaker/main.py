@@ -11,7 +11,7 @@ from studyareamapmaker.lib import generate_study_area_map
 
 app = FastAPI()
 
-templates = Jinja2Templates(directory="./templates")
+templates = Jinja2Templates(directory="templates")
 
 def study_map_from_form(
     study_regions: List[StudyMapRegion] = Form(default=[]),
