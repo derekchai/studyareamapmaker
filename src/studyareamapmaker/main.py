@@ -3,6 +3,7 @@ import matplotlib.pyplot as plt
 from io import BytesIO
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from matplotlib.ticker import FuncFormatter, MultipleLocator
+from matplotlib_map_utils.core import north_arrow, scale_bar
 from .study_map import StudyMap
 from shapely.geometry import box
 
@@ -19,6 +20,14 @@ def generate_study_area_map(shapefile_path: str,
 
     ax.set_title("Shapefile")
     ax.set_facecolor("lightblue")
+
+    if map.show_north_arrow:
+        north_arrow(ax, location="upper left", 
+                    rotation={ "crs": shape.crs, "reference": "center" })
+    
+    if map.show_scale:
+        scale_bar(ax, location="lower left", bar={ "projection": shape.crs }, 
+                  labels={ "style": "first_last" })
 
     buffer = BytesIO()
     plt.savefig(buffer, format="png")

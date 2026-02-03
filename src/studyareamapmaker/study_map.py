@@ -10,6 +10,9 @@ _SPHERICAL_MERCATOR = "EPSG:3857"
 class StudyMap(BaseModel):
     study_regions: List[StudyMapRegion] = Field(default=[])
 
+    show_north_arrow: bool = Field(default=True)
+    show_scale: bool = Field(default=True)
+
     inset_width: float = Field(default=0.3, ge=0, le=1)
     inset_height: float = Field(default=0.3, ge=0, le=1)
     inset_show_background: bool = Field(default=False)
