@@ -1,6 +1,7 @@
 import tempfile
 import shutil
-from fastapi import FastAPI, Response, UploadFile, Request, Form, Depends
+import base64
+from fastapi import FastAPI, UploadFile, Request, Form, Depends
 from typing import List, Annotated
 from pathlib import Path
 from .main import generate_study_area_map 
@@ -50,10 +51,7 @@ def study_map_from_form(
 async def get_index(request: Request):
     return templates.TemplateResponse(request=request, name="index.html")
 
-@app.post("/get_map",
-          responses={
-              200: { "content": { "image/png": {} } }
-          })
+@app.post("/get_map", response_class=HTMLResponse)
 async def get_map(shapefiles: List[UploadFile],
                   study_map: Annotated[StudyMap, Depends] = Depends(study_map_from_form)):
     with tempfile.TemporaryDirectory() as temp_dir:
@@ -69,5 +67,8 @@ async def get_map(shapefiles: List[UploadFile],
                 main_shp_path = destination
 
         image_bytes = generate_study_area_map(main_shp_path, study_map)
+
+    encoded_image = base64.b64encode(image_bytes).decode("utf-8")
+    html = f'<img src="data:image/png;base64,{encoded_image}" alt="Study Map"/>'
             
-    return Response(content=image_bytes, media_type="image/png")
+    return HTMLResponse(content=html)
