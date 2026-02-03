@@ -1,12 +1,20 @@
 import tempfile
 import shutil
-from fastapi import FastAPI, Response, UploadFile
+from fastapi import FastAPI, Response, UploadFile, Request
 from typing import List
 from pathlib import Path
 from .main import generate_study_area_map 
 from .study_map import StudyMap
+from fastapi.templating import Jinja2Templates
+from fastapi.responses import HTMLResponse
 
 app = FastAPI()
+
+templates = Jinja2Templates(directory="templates")
+
+@app.get("/", response_class=HTMLResponse)
+async def get_index(request: Request):
+    return templates.TemplateResponse(request=request, name="index.html")
 
 @app.post("/get_map",
           responses={
