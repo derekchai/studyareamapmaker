@@ -1,0 +1,4 @@
+geopandas
+matplotlib
+fastapi
+matplotlib_map_utils
