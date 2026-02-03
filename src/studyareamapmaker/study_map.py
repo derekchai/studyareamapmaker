@@ -28,7 +28,8 @@ class StudyMap(BaseModel):
 
     def get_study_regions_data_frame_wgs84(self):
         data_frame = gpd.GeoDataFrame(
-            { "name": [f"Region {i + 1}" for i in range(len(self.study_regions))] },
+            { "name": [region.name or f"Region {i + 1}"
+                       for i, region in enumerate(self.study_regions)] },
             geometry=[box(r.min_lon, r.min_lat, r.max_lon, r.max_lat) 
                     for r in self.study_regions],
             crs=_WGS84
@@ -42,6 +43,8 @@ class StudyMap(BaseModel):
         return data_frame
 
 class StudyMapRegion(BaseModel):
+    name: str | None = Field(default=None)
+
     min_lat: float = Field(ge=-90, le=90)
     min_lon: float = Field(ge=-180, le=180)
     max_lat: float = Field(ge=-90, le=90)
