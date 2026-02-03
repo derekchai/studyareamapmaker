@@ -6,12 +6,12 @@ from typing import List, Annotated
 from pathlib import Path
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
-from studyareamapmaker.study_map import StudyMapRegion, StudyMap
-from studyareamapmaker.lib import generate_study_area_map
+from study_map import StudyMapRegion, StudyMap
+from lib import generate_study_area_map
 
 app = FastAPI()
 
-templates = Jinja2Templates(directory="./templates")
+templates = Jinja2Templates(directory="templates")
 
 def study_map_from_form(
     study_regions: List[StudyMapRegion] = Form(default=[]),
