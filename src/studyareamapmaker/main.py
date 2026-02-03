@@ -20,6 +20,10 @@ def generate_study_area_map(shapefile_path: str,
 
     ax.set_title(map.title)
     ax.set_facecolor("lightblue")
+    
+    if not map.show_axis_ticks:
+        ax.set_xticks([])
+        ax.set_yticks([])
 
     if map.show_north_arrow:
         north_arrow(ax, location="upper left", 

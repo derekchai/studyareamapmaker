@@ -13,6 +13,7 @@ class StudyMap(BaseModel):
 
     show_north_arrow: bool = Field(default=True)
     show_scale: bool = Field(default=True)
+    show_axis_ticks: bool = Field(default=True)
 
     inset_width: float = Field(default=0.3, ge=0, le=1)
     inset_height: float = Field(default=0.3, ge=0, le=1)
