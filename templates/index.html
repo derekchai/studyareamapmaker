@@ -3,20 +3,98 @@
     <title>Item Details</title>
     <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js" integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz" crossorigin="anonymous"></script>
 </head>
+<style>
+    body { font-family: sans-serif;}
+
+    form { display: table; }
+    fieldset { display: contents; }
+    legend { font-weight: bold; }
+    p { display: table-row; }
+    label { display: table-cell; padding: 4px 20px; }
+    input { display: table-cell; padding: 4px; }
+    button { padding: 4px; }
+</style>
 <body>
     <h1>Study Area Map Maker</h1>
-    <p>by <strong>DEREK CHAI</strong></p>
+
+    <br>
 
     <form hx-post="/get_map" hx-target="#map-container" hx-swap="innerHTML" 
     enctype="multipart/form-data">
-        <label>Shapefiles
-            <input type="file" name="shapefiles" multiple required>
-        </label>
-        <br>
+        <fieldset>
+            <legend>General</legend>
 
-        <label>Title
-            <input type="text" name="title" value="My Study Map">
-        </label>
+            <p>
+                <label>Shapefiles</label>
+                <input type="file" name="shapefiles" multiple required>
+            </p>
+
+            <p>
+                <label>Title</label>
+                <input type="text" name="title" value="My Study Map">
+            </p>
+
+            <p>
+                <label>Show north arrow</label>
+                <input type="checkbox" name="show_north_arrow" checked>
+            </p>
+
+            <p>
+                <label>Show scale</label>
+                <input type="checkbox" name="show_scale" checked>
+            </p>
+
+            <p>
+                <label>Show axis ticks</label>
+                <input type="checkbox" name="show_axis_ticks">
+            </p>
+
+            <p>
+                <label>Top padding (proportion of total study regions height)</label>
+                <input type="number" step="0.01" name="pad_top_factor" value=0.1>
+            </p>
+
+            <p>
+                <label>Bottom padding (proportion of total study regions height)</label>
+                <input type="number" step="0.01" name="pad_bottom_factor" value=0.1>
+            </p>
+
+            <p>
+                <label>Left padding (proportion of total study regions width)</label>
+                <input type="number" step="0.01" name="pad_left_factor" value=0.1>
+            </p>
+
+            <p>
+                <label>Right padding (proportion of total study regions width)</label>
+                <input type="number" step="0.01" name="pad_right_factor" value=0.1>
+            </p>
+        </fieldset>
+
+        <fieldset>
+            <legend>Inset Map</legend>
+            
+            <p>
+                <label>Width (proportion of total width)</label>
+                <input type="number" step="0.01" name="inset_width" value=0.3>
+            </p>
+
+            <p>
+                <label>Height (proportion of total height)</label>
+                <input type="number" step="0.01" name="inset_height" value=0.3>
+            </p>
+
+            <p>
+                <label>Show background</label>
+                <input type="checkbox" name="inset_show_background" checked>
+            </p>
+
+            <p>
+                <label>Shape line width</label>
+                <input type="number" step="0.01" name="inset_line_width" value=0.7>
+            </p>
+
+
+        </fieldset>
         <br>
 
         <button type="submit">Generate</button>
