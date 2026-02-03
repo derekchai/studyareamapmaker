@@ -49,14 +49,14 @@ def _plot_study_regions(ax: plt.Axes,
                         base_shape: gpd.GeoDataFrame):
     base_shape.plot(ax=ax, linewidth=1, edgecolor="k", facecolor="w")
 
-    if map.get_study_regions_data_frame_wgs84().empty:
-        return
+    reference = base_shape
+    if not map.get_study_regions_data_frame_wgs84().empty:
+        data_frame = map.get_study_regions_data_frame_wgs84().to_crs(base_shape.crs)
+        data_frame.plot(ax=ax, linewidth=1, alpha=0.3, column="name", cmap="Paired", 
+                        legend=True, legend_kwds={ "loc": "lower right" })
+        reference = data_frame
 
-    data_frame = map.get_study_regions_data_frame_wgs84().to_crs(base_shape.crs)
-    data_frame.plot(ax=ax, linewidth=1, alpha=0.3, column="name", cmap="Paired", 
-                    legend=True, legend_kwds={ "loc": "lower right" })
-    
-    min_x, min_y, max_x, max_y = data_frame.total_bounds
+    min_x, min_y, max_x, max_y = reference.total_bounds
     height = max_y - min_y
     width = max_x - min_x
 
