@@ -6,5 +6,23 @@
 <body>
     <h1>Study Area Map Maker</h1>
     <p>by <strong>DEREK CHAI</strong></p>
+
+    <form hx-post="/get_map" hx-target="#map-container" hx-swap="innerHTML" 
+    enctype="multipart/form-data">
+        <label>Shapefiles
+            <input type="file" name="shapefiles" multiple required>
+        </label>
+        <br>
+
+        <label>Title
+            <input type="text" name="title" value="My Study Map">
+        </label>
+        <br>
+
+        <button type="submit">Generate</button>
+    </form>
+
+    <div id="map-container"></div>
+
 </body>
 </html>
