@@ -4,7 +4,7 @@ from io import BytesIO
 from mpl_toolkits.axes_grid1.inset_locator import inset_axes
 from matplotlib.ticker import FuncFormatter, MultipleLocator
 from matplotlib_map_utils.core import north_arrow, scale_bar
-from .study_map import StudyMap
+from studyareamapmaker import *
 from shapely.geometry import box
 
 _WGS84 = "EPSG:4326"

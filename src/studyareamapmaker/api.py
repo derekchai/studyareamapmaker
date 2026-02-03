@@ -4,8 +4,7 @@ import base64
 from fastapi import FastAPI, UploadFile, Request, Form, Depends
 from typing import List, Annotated
 from pathlib import Path
-from .main import generate_study_area_map 
-from .study_map import StudyMap, StudyMapRegion
+from studyareamapmaker import *
 from fastapi.templating import Jinja2Templates
 from fastapi.responses import HTMLResponse
 
