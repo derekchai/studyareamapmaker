@@ -33,6 +33,9 @@ class StudyMap(BaseModel):
         return value
 
     def get_study_regions_data_frame_wgs84(self):
+        if len(self.study_regions) == 0:
+            return gpd.GeoDataFrame()
+
         data_frame = gpd.GeoDataFrame(
             { "name": [region.name or f"Region {i + 1}"
                        for i, region in enumerate(self.study_regions)] },

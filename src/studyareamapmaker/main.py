@@ -49,6 +49,9 @@ def _plot_study_regions(ax: plt.Axes,
                         base_shape: gpd.GeoDataFrame):
     base_shape.plot(ax=ax, linewidth=1, edgecolor="k", facecolor="w")
 
+    if map.get_study_regions_data_frame_wgs84().empty:
+        return
+
     data_frame = map.get_study_regions_data_frame_wgs84().to_crs(base_shape.crs)
     data_frame.plot(ax=ax, linewidth=1, alpha=0.3, column="name", cmap="Paired", 
                     legend=True, legend_kwds={ "loc": "lower right" })
@@ -95,5 +98,8 @@ def _plot_inset_map(ax: plt.Axes,
         label.set_horizontalalignment("center")
     
     inset.tick_params(axis="y", pad=7)
+
+    if map.get_study_regions_data_frame_wgs84().empty:
+        return
 
     map.get_study_regions_data_frame_wgs84().set_geometry("centroid").plot(ax=inset, color="red")
