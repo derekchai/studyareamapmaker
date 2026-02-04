@@ -8,8 +8,5 @@ __pycache__
 .DS_Store
 debug
 temp
-*.png
-*.jpg
-*.jpeg
 *.pyc
 misc
