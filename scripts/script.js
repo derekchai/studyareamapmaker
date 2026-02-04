@@ -10,8 +10,10 @@ function addRegion() {
     };
 
     regions.push(region);
+    
     updateRegionList();
     updateHiddenField();
+    clearInputs();
     event.preventDefault();
 }
 
@@ -39,6 +41,14 @@ function updateRegionList() {
         li.textContent = `${r.name ?? "Unnamed"}: [${r.min_lat}, ${r.min_lon}] → [${r.max_lat}, ${r.max_lon}]`;
 
         list.appendChild(li);
+    })
+}
+
+function clearInputs() {
+    const inputs = document.getElementById("region-editor").childNodes;
+
+    inputs.forEach((input, i) => {
+        input.value = "";
     })
 }
 
