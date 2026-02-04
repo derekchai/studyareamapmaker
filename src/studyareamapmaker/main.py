@@ -2,6 +2,7 @@ import tempfile
 import shutil
 import base64
 from fastapi import FastAPI, UploadFile, Request, Form, Depends
+from fastapi.responses import FileResponse
 from typing import List, Annotated
 from pathlib import Path
 from fastapi.templating import Jinja2Templates
@@ -50,6 +51,10 @@ def study_map_from_form(
 @app.get("/", response_class=HTMLResponse)
 async def get_index(request: Request):
     return templates.TemplateResponse(request=request, name="index.html")
+
+@app.get("/templates/script.js", response_class=FileResponse)
+async def get_script():
+    return FileResponse("templates/script.js")
 
 @app.post("/get_map", response_class=HTMLResponse)
 async def get_map(shapefiles: List[UploadFile],
