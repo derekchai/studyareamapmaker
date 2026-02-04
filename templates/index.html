@@ -90,16 +90,19 @@
 
             <div id="region-editor">
                 <input type="text" id="region-name" placeholder="Region name">
-                <input type="number" step="0.00001" id="min-lat" placeholder="Min. latitude">
-                <input type="number" step="0.00001" id="min-lon" placeholder="Min. longitude">
-                <input type="number" step="0.00001" id="max-lat" placeholder="Max. latitude">
-                <input type="number" step="0.00001" id="max-lon" placeholder="Max. longitude">
+                <input type="number" step="any" id="min-lat" placeholder="Min. latitude">
+                <input type="number" step="any" id="min-lon" placeholder="Min. longitude">
+                <input type="number" step="any" id="max-lat" placeholder="Max. latitude">
+                <input type="number" step="any" id="max-lon" placeholder="Max. longitude">
             </div>
 
 
             <ul id="region-list"></ul>
 
-            <input type="hidden" name="study_regions" id="study_regions">
+            <div id="study-regions-hidden-inputs">
+                <input type="hidden" name="study_regions" id="study_regions">
+            </div>
+
             <button id="add-region-button">Add region</button>
         </fieldset>
 
@@ -155,8 +158,18 @@ function addRegion() {
 }
 
 function updateHiddenField() {
-    document.getElementById("study_regions").value = JSON.stringify(regions);
-    console.log(document.getElementById("study_regions").value)
+    const hidden = document.getElementById("study-regions-hidden-inputs");
+    hidden.innerHTML = "";
+
+    regions.forEach((r, i) => {
+        const input = document.createElement("input");
+        input.name = "study_regions";
+        input.value = JSON.stringify(r);
+        input.type = "hidden";
+        hidden.appendChild(input);
+    })
+
+    console.log(hidden.value)
 }
 
 function updateRegionList() {
