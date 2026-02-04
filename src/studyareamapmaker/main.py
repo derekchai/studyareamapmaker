@@ -52,9 +52,9 @@ def study_map_from_form(
 async def get_index(request: Request):
     return templates.TemplateResponse(request=request, name="index.html")
 
-@app.get("/templates/script.js", response_class=FileResponse)
+@app.get("/scripts/script.js", response_class=FileResponse)
 async def get_script():
-    return FileResponse("templates/script.js")
+    return FileResponse("scripts/script.js")
 
 @app.post("/get_map", response_class=HTMLResponse)
 async def get_map(shapefiles: List[UploadFile],
