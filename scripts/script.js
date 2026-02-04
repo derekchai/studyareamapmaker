@@ -10,7 +10,7 @@ function addRegion() {
     };
 
     regions.push(region);
-    
+
     updateRegionList();
     updateHiddenField();
     clearInputs();
@@ -38,7 +38,17 @@ function updateRegionList() {
 
     regions.forEach((r, i) => {
         const li = document.createElement("li");
+
+        const deleteButton = document.createElement("button");
+        deleteButton.textContent = "❌";
+        deleteButton.onclick = function () {
+            regions.splice(i, 1);
+            updateRegionList();
+        };
+
         li.textContent = `${r.name ?? "Unnamed"}: [${r.min_lat}, ${r.min_lon}] → [${r.max_lat}, ${r.max_lon}]`;
+
+        li.appendChild(deleteButton);
 
         list.appendChild(li);
     })
