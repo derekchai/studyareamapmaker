@@ -12,7 +12,7 @@ This is a simple web program to create study area maps suitable for use within p
 ### Local install
 To install locally, download the source code and from the root directory (in a virtual environment):
 1. `$ pip install .`
-2. `fastapi dev src/studyareamapmaker/main.py`
+2. `$ fastapi dev src/studyareamapmaker/main.py`
 
 Upon running the script, the URL to the website will be presented (http://127.0.0.1:8000 by default). 
 
