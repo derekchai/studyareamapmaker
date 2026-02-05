@@ -20,4 +20,4 @@ Upon running the script, the URL to the website will be presented (http://127.0.
 A web-hosted instance of the API is located [here](https://studyareamapmaker.onrender.com). Please note that the website will take some time to boot up from hibernation at first, and the processing is very slow as it is freely hosted at the moment.
 
 ## Examples
-![Study map example](https://github.com/derekchai/studyareamapmaker/blob/70738a853a6ad02eaa5a82a61d4fde74dd9b0cae/examples/mapmaker-example.png)
+<img src="https://github.com/derekchai/studyareamapmaker/blob/70738a853a6ad02eaa5a82a61d4fde74dd9b0cae/examples/mapmaker-example.png" width="750">
